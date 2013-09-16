@@ -1,5 +1,7 @@
 <?php
 
+
+
 // Start session
 session_start ();
 
@@ -33,19 +35,10 @@ if ($username == '')
 	$errmsg_arr [] = 'Username missing';
 	$errflag = true;
 }
-if ($password == '')
+if ($password == '') 
 {
 	$errmsg_arr [] = 'Password missing';
 	$errflag = true;
-}
-
-// If there are input validations, redirect back to the login form
-if ($errflag)
-{
-	$_SESSION ['ERRMSG_ARR'] = $errmsg_arr;
-	session_write_close ();
-	header ( "location: login-form.php" );
-	exit ();
 }
 
 // Create query
@@ -68,7 +61,7 @@ if ($result)
 		$user = mysql_fetch_assoc ( $result );
 		$_SESSION ['SESS_USER_ID'] = $user ['user_id'];
 		$_SESSION ['SESS_USER_TYPE'] = $user ['user_type_id'];
-		
+
 		$_SESSION ['SESS_USERNAME'] = $user ['username'];
 		// setRequiredInfo ();
 		session_write_close ();
@@ -78,7 +71,7 @@ if ($result)
 		$userTypeId = $user ['user_type_id'];
 	} else
 	{
-		$successFlag = "false";	
+		$successFlag = "false";
 	}
 } else
 {
@@ -87,12 +80,15 @@ if ($result)
 }
 /*
  * { "successFlag":"daskhdjas" "sessionId":"fgjkasgkjdas" "userId":"fdjkshfjk" "userTypeId":"oiiywejfnsdnfjsdgf" }
- */
+*/
 ?>
 
-{
-	"successFlag":"<?php echo $successFlag; ?>",
-	"sessionId":"<?php echo $sessionId; ?>",
-	"userId":"<?php echo $userId; ?>",
-	"userTypeId":"<?php echo $userTypeId; ?>",
-}
+{ "successFlag":"
+<?php echo $successFlag; ?>
+", "sessionId":"
+<?php echo $sessionId; ?>
+", "userId":"
+<?php echo $userId; ?>
+", "userTypeId":"
+<?php echo $userTypeId; ?>
+" }

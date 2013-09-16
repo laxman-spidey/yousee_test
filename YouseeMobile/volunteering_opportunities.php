@@ -35,8 +35,11 @@ if (isset ( $_POST ["firstTime"] ))
 	getFilteredList ();
 }
 executeQuery ( $activityQuery );
+
 buildJSON ( $resultCount, $totalCount, $result );
+
 echo $finalResult;
+
 
 // functions
 function getRecentList()
@@ -143,6 +146,7 @@ function buildJSON($resultCount, $totalCount, $result)
 		$finalResult .= "]";
 		$finalResult .= "}";
 		$finalResult .= "}";
+		//setResultHeader($TAG_SUCCESS);
 		
 		// $finalResult.="}";
 	}

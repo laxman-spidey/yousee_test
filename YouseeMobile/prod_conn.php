@@ -6,12 +6,34 @@ $dbhost = "localhost";
 $dbuser = "guna";
 
 //Password of the above user account
-$dbpass = "password";
+$dbpass = "guna";
 
 //Database which will be selected before performing any insertion, updation or deletion
 $dbdatabase = "ucdblive";
 
+$TAG_REQUEST_CODE = "requestCode";
+$TAG_RESULT_CODE = "responseCode";
+$TAG_SUCCESS = "1";
+$TAG_FAILED = "0";
+
 $link = mysql_connect ( "$dbhost", "$dbuser", "$dbpass" );
 
 $db = mysql_select_db ( "$dbdatabase" );
+
+
+$requestCode = $_POST[$TAG_REQUEST_CODE];
+if(isset($_POST[$TAG_REQUEST_CODE]))
+	$requestCode = $_POST[$TAG_REQUEST_CODE];
+header("$TAG_REQUEST_CODE : ".$requestCode."");
+
+function setResultHeader($resultCode)
+{
+	//http_response_code($resultCode);
+	
+	header("$TAG_RESULT_CODE: ".$requestCode.",".$resultCode."");
+	
+}
+
+
+
 ?>

@@ -1,7 +1,5 @@
-{
-	"activityList" :
-	[
-	
+{ "activityList" : [
+
 <?php
 // Start session
 session_start ();
@@ -18,7 +16,7 @@ while ( $record = mysql_fetch_array ( $oppresult ) )
 	$schedule .= "\"opportunityId\":\"" . $record ['opportunity_id'] . "\", ";
 	$schedule .= "\"fromDate\":\"" . gmdate ( "M d, Y", strtotime ( $record ['from_date'] ) ) . "\", ";
 	$schedule .= "\"toDate\":\"" . gmdate ( "M d, Y", strtotime ( $record ['to_date'] ) ) . "\", ";
-	
+
 	if ($record ['from_time'] == 0)
 	{
 		$schedule .= "\"fromTime\":\"\", ";
@@ -26,7 +24,7 @@ while ( $record = mysql_fetch_array ( $oppresult ) )
 	{
 		$schedule .= "\"fromTime\":\"" . date ( "g:iA", strtotime ( $record ['from_time'] ) ) . "\", ";
 	}
-	
+
 	if ($record ['to_time'] == 0)
 	{
 		$schedule .= "\"toTime\":\"\", ";
@@ -38,10 +36,12 @@ while ( $record = mysql_fetch_array ( $oppresult ) )
 	$schedule .= "\"city\":\"" . $record ['city'] . "\", ";
 	$schedule .= "\"volReq\":\"" . $record ['num_volunteers'] . "\" ";
 	$schedule .= "},";
-	
+
 }
 $schedule = substr ( $schedule, 0, - 1 );
 echo $schedule;
+
+
+
 ?>
-]
-}
+] }

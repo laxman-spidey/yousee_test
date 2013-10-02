@@ -12,7 +12,7 @@ $dbpass = "guna";
 $dbdatabase = "ucdblive";
 
 $TAG_REQUEST_CODE = "requestCode";
-$TAG_RESULT_CODE = "responseCode";
+$TAG_RESULT_CODE = "resultCode";
 $TAG_SUCCESS = "1";
 $TAG_FAILED = "0";
 
@@ -22,17 +22,11 @@ $db = mysql_select_db ( "$dbdatabase" );
 
 
 $requestCode = $_POST[$TAG_REQUEST_CODE];
-if(isset($_POST[$TAG_REQUEST_CODE]))
-	$requestCode = $_POST[$TAG_REQUEST_CODE];
+
 header("$TAG_REQUEST_CODE : ".$requestCode."");
 
-function setResultHeader($resultCode)
-{
-	//http_response_code($resultCode);
-	
-	header("$TAG_RESULT_CODE: ".$requestCode.",".$resultCode."");
-	
-}
+
+session_start();
 
 
 

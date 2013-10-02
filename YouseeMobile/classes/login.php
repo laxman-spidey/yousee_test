@@ -14,35 +14,17 @@ class LoginExec
 
 	function LoginExec()
 	{
-		session_start ();
+
+
 		require_once ('prod_conn.php');
 
 	}
 
 	function preProcess($username, $password)
 	{
-		$errmsg_arr = array ();
-
-		// Validation error flag
-		$errflag = false;
-
-
-
-
 		// Sanitize the POST values
 		$this->username = $this->clean ( $username );
 		$this->password = md5 ( $this->clean ( $password ) );
-		// Input Validations
-		if ($username == '')
-		{
-			$errmsg_arr [] = 'Username missing';
-			$errflag = true;
-		}
-		if ($password == '')
-		{
-			$errmsg_arr [] = 'Password missing';
-			$errflag = true;
-		}
 
 	}
 
@@ -60,22 +42,25 @@ class LoginExec
 	function exec($username, $password)
 	{
 		// Create query
+
 		$this->preProcess($username, $password);
-		$query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+		//echo "jhgdfgljdffhgfksjdbgof  $this->username , $this->password";
+		$query = "SELECT * FROM users WHERE username='$this->username' AND password='$this->password'";
 
 		$result = mysql_query ( $query );
 		// Check whether the query was successful or not
 		if ($result)
 		{
+
 			if (mysql_num_rows ( $result ) == 1)
 			{
 				// Login Successful
-				session_regenerate_id ();
+				//session_regenerate_id ();
 				$user = mysql_fetch_assoc ( $result );
-				$_SESSION ['SESS_USER_ID'] = $user ['user_id'];
-				$_SESSION ['SESS_USER_TYPE'] = $user ['user_type_id'];
+				$_SESSION['SESS_USER_ID'] = $user ['user_id'];
+				$_SESSION['SESS_USER_TYPE'] = $user ['user_type_id'];
 
-				$_SESSION ['SESS_USERNAME'] = $user ['username'];
+				$_SESSION['SESS_USERNAME'] = $user ['username'];
 				// setRequiredInfo 			();
 				session_write_close ();
 				$this->successFlag = "true";
@@ -102,7 +87,13 @@ class LoginExec
 		$this->finalResult .= "\"userId\":\"$this->userId\",";
 		$this->finalResult .= "\"userTypeId\":\"$this->userTypeId\"";
 
-		return $finalResult;
+		return $this->finalResult;
+
+	}
+	function setSessionData()
+	{
+		$_SESSION['SESS_USER_ID'] = $this->userId;
+		$_SESSION['SESS_USER_TYPE'] = $this->userTypeId;
 
 	}
 

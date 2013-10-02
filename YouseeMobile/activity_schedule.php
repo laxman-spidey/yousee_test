@@ -2,11 +2,17 @@
 
 <?php
 // Start session
-session_start ();
+
 
 // Include database connection details
 require_once ('prod_conn.php');
 //$_POST ['activity_id'] = "4";
+$appendWhere = "";
+if(isset($_POST['userId']))
+{
+	$appendWhere = "AND ";
+}
+
 $opp_query = "SELECT * FROM volunteering_opportunities WHERE approval_status='A' AND to_date>'" . date ( "Y-m-d" ) . "' AND activity_id=" . $_POST ['activity_id'];
 $oppresult = mysql_query ( $opp_query );
 $schedule = "";
@@ -34,7 +40,23 @@ while ( $record = mysql_fetch_array ( $oppresult ) )
 	}
 	$schedule .= "\"location\":\"" . $record ['location'] . "\", ";
 	$schedule .= "\"city\":\"" . $record ['city'] . "\", ";
-	$schedule .= "\"volReq\":\"" . $record ['num_volunteers'] . "\" ";
+	$schedule .= "\"volReq\":\"" . $record ['num_volunteers'] . "\", ";
+	$committed="false";
+	if(isset($_POST['userId']))
+	{
+		$opquery="SELECT opportunity_id from volunteer_commits WHERE donor_id=".$donor_id['donor_id']." AND opportunity_id=".$record['opportunity_id'];
+		$opresult=mysql_query($opquery);
+		$opcount=mysql_num_rows($opresult);
+		if($opcount>=1)
+		{
+			$oppid=mysql_fetch_array($opresult);
+			if($oppid['opportunity_id']==$record['opportunity_id'])
+			{
+				$committed="true";
+			}
+		}
+	}
+	$schedule .= "\"committed\":\"$committed\"";
 	$schedule .= "},";
 
 }

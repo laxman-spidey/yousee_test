@@ -130,7 +130,6 @@ function buildJSON($resultCount, $totalCount, $result)
 		$finalResult .= "\"resultCount\":\"$resultCount\",";
 		$finalResult .= "\"totalCount\":\"$totalCount\",";
 		$finalResult .= "\"list\":[";
-		
 		while ( $row = mysql_fetch_array ( $result ) )
 		{
 			

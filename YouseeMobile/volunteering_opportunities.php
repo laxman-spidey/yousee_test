@@ -97,7 +97,7 @@ function getFilteredList()
 	$activityQuery = "SELECT * FROM project_partners p
 				JOIN volunteering_activity v ON p.partner_id=v.partner_id 
 				JOIN volunteering_opportunities o ON v.activity_id=o.activity_id 
-				WHERE o.approval_status='A' AND o.to_date>'" . date ( "Y-m-d" ) . "' " . $where . " GROUP BY o.activity_id  LIMIT 0,10";
+				WHERE o.approval_status='A' AND o.to_date>'" . date ( "Y-m-d" ) . "' " . $where . " GROUP BY o.activity_id";
 	// echo $activityQuery;
 }
 function executeQuery($activityQuery)

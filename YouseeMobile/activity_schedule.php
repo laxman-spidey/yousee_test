@@ -42,21 +42,37 @@ while ( $record = mysql_fetch_array ( $oppresult ) )
 	$schedule .= "\"city\":\"" . $record ['city'] . "\", ";
 	$schedule .= "\"volReq\":\"" . $record ['num_volunteers'] . "\", ";
 	$committed="false";
+	$test="";
+	
 	if(isset($_POST['userId']))
 	{
+
+		$userId = $_POST['userId'];
+		$donorquery="SELECT donor_id from donors WHERE donors.user_id='".$userId."'";
+		$donorresult=mysql_query($donorquery);
+		$donor_id = mysql_fetch_array($donorresult);
+		
+		
+		$test.="userid undhi....";
 		$opquery="SELECT opportunity_id from volunteer_commits WHERE donor_id=".$donor_id['donor_id']." AND opportunity_id=".$record['opportunity_id'];
+		$test.=$opquery."..........";
 		$opresult=mysql_query($opquery);
 		$opcount=mysql_num_rows($opresult);
+		$test.="-----oppotunityCount : ".$opcount."..........";
 		if($opcount>=1)
 		{
+			$test.="oppcount if...";
 			$oppid=mysql_fetch_array($opresult);
 			if($oppid['opportunity_id']==$record['opportunity_id'])
 			{
+				$test.="fjskjhfjksdghjhfg........";
 				$committed="true";
 			}
 		}
 	}
+	//$schedule .= "\"test\":\"$test\",";
 	$schedule .= "\"committed\":\"$committed\"";
+	
 	$schedule .= "},";
 
 }

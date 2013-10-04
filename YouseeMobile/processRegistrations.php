@@ -68,8 +68,8 @@ function executeRegQuery()
 function insertUserIntoDatabase()
 {
 	global $firstName,$lastName, $email, $password, $dob, $city, $phNo, $EMAIL_ALREADY_TAKEN_ERROR_CODE,$USERNAME_EXISTS_ERROR_CODE, $REGISTRATION_SUCCESS_CODE,$TAG_RESULT_CODE,$TAG_FAILED,$PHONE_NUMBER_ALREADY_EXISTS;
-	$userValues="'D','$email','$password','A'";
-	$userInsertAtts = "user_type_id, username, password, registration_status";
+	$userValues="'D','$email','$password','A','$city','$phNo'";
+	$userInsertAtts = "user_type_id, username, password, registration_status, city, mobile_phone_no";
 	$insertUserQuery="INSERT INTO users($userInsertAtts) VALUES($userValues)";
 	echo $insertUserQuery;
 	if (!mysql_query($insertUserQuery))

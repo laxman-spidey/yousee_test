@@ -10,6 +10,8 @@ class LoginExec
 	private $errorMsg = null;
 	private $errorCode = null;
 	private $finalResult=NULL;
+	private $debugString;
+	public $debug =false;
 
 
 	function LoginExec()
@@ -24,7 +26,8 @@ class LoginExec
 	{
 		// Sanitize the POST values
 		$this->username = $this->clean ( $username );
-		$this->password = md5 ( $this->clean ( $password ) );
+		$password = $this->clean ( $password );
+		$this->password = md5 ( $password );
 
 	}
 
@@ -46,6 +49,7 @@ class LoginExec
 		$this->preProcess($username, $password);
 		//echo "jhgdfgljdffhgfksjdbgof  $this->username , $this->password";
 		$query = "SELECT * FROM users WHERE username='$this->username' AND password='$this->password'";
+		$this->debugString.="\nQuery: ".$query;
 
 		$result = mysql_query ( $query );
 		// Check whether the query was successful or not
@@ -85,6 +89,10 @@ class LoginExec
 		$this->finalResult .= "\"successFlag\":\"$this->successFlag\",";
 		$this->finalResult .= "\"sessionId\":\"$this->sessionId\",";
 		$this->finalResult .= "\"userId\":\"$this->userId\",";
+		if($this->debug == true)
+		{
+			$this->finalResult .= "\"debug\":\"$this->debugString\",";
+		}
 		$this->finalResult .= "\"userTypeId\":\"$this->userTypeId\"";
 
 		return $this->finalResult;

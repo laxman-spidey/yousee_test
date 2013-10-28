@@ -2,6 +2,7 @@
 class GCM
 {
 	private $URL = "https://android.googleapis.com/gcm/send";
+	//private $URL = "http://www.google.com/";
 	private $API_KEY = "AIzaSyA3HjWvDdq5hleMFK6E24t8FGopNyBWo7w";
 	private $registrationIdArray;
 	private $data;
@@ -27,12 +28,13 @@ class GCM
 			"Content-Type: application/json",
 			"Content-Length: " . strlen($this -> data)
 		);
-		
+
 		curl_setopt($this -> curl, CURLOPT_URL, $this -> URL);
 		curl_setopt($this -> curl, CURLOPT_HTTPHEADER, $this -> header);
 		curl_setopt($this -> curl, CURLOPT_POSTFIELDS, $this -> data);
-		curl_exec($this->curl);
-		echo "ggjhhjk";
+		$result = curl_exec($this -> curl);
+		curl_close($this -> curl);
+		$this ->onResponseRecieved($result);
 
 	}
 
@@ -46,9 +48,9 @@ class GCM
 		echo json_encode($finalJsonObject);
 	}
 
-	private function onResponseRecieved()
+	private function onResponseRecieved($result)
 	{
-
+		echo $result;
 	}
 
 	private function getRegIdsFromDatabase()

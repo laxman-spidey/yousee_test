@@ -1,10 +1,5 @@
 <?php
 
-/*
- *
- */
-session_start ();
-
 // Include database connection details
 require_once ('prod_conn.php');
 
